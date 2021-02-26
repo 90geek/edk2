@@ -1,0 +1,22 @@
+
+#langdef en-US  "English"
+#langdef fr-FR  "Francais"
+#langdef x-UEFI-ns "UefiNameSpace"
+
+
+#string STR_POWER_RESTORE_OPTION       #language en-US "Power Restore Policy"
+                                       #language fr-FR "Power Restore Policy"
+#string STR_POWER_RESTORE_OPTION_HELP  #language en-US "This is Set Power Restore Policy "
+                                       #language fr-FR "This is Set Power Restore Policy "
+#string STR_POWER_OFF                  #language en-US "POWER_OFF"
+                                       #language fr-FR "POWER_OFF"
+#string STR_POWER_HOLD                 #language en-US "POWER_HOLD"
+                                       #language fr-FR "POWER_HOLD"
+#string STR_POWER_ON                   #language en-US "POWER_ON"
+                                       #language fr-FR "POWER_ON"
+#string STR_UNKNOWN                    #language en-US "UNKNOWN"
+                                       #language fr-FR "UNKNOWN"
+#string STR_SET_POWER_FAILD            #language en-US "Set Bmc Power Restore Policy Command Faild! "
+                                       #language fr-FR "Set Bmc Power Restore Policy Command Faild! "
+#string STR_POWER_REPEAT               #language en-US "Old status already was it "
+                                       #language fr-FR "Old status already was it "

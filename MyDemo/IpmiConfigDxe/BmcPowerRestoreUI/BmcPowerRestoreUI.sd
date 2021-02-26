@@ -1,0 +1,67 @@
+//
+// @file  BmcPowerRestoreUI.sd
+//
+//  Contains the setup description for BMC Power Retore Page
+//
+
+#ifdef BMC_LAN_CONFIGURATION_DATA_DEFINITION
+//***********************************************************
+// Put NVRAM data definitions here.
+// For example:    UINT8 Data1;
+// These definitions will be converted by the build process
+//***********************************************************
+#endif //#ifdef BMC_LAN_CONFIGURATION_DATA_DEFINITION
+#define CONTROL_DEFINITION
+#ifdef CONTROL_DEFINITION
+
+#define BMC_POWER_RESTORE_POLICY_ONEOF\
+    oneof varid = BmcIpmiConfigVar.PowerRes,\
+        questionid = BMC_POWER_RESTORE_POLICY_KEY,\
+        prompt      = STRING_TOKEN(STR_POWER_RESTORE_OPTION),\
+        help        = STRING_TOKEN(STR_POWER_RESTORE_OPTION_HELP),\
+        option text = STRING_TOKEN(STR_POWER_OFF), value = 0x0, flags = INTERACTIVE;\
+        option text = STRING_TOKEN(STR_POWER_HOLD),  value = 0x1, flags = INTERACTIVE;\
+        option text = STRING_TOKEN(STR_POWER_ON), value = 0x2, flags = DEFAULT | INTERACTIVE;\
+        option text = STRING_TOKEN(STR_UNKNOWN), value = 0xf, flags = INTERACTIVE;\
+    endoneof;
+
+#endif //#ifdef CONTROL_DEFINITION
+
+#ifdef CONTROLS_WITH_DEFAULTS
+    BMC_POWER_RESTORE_POLICY_ONEOF
+#endif //#ifdef CONTROLS_WITH_DEFAULTS
+
+#ifdef BMC_CONFIG_FORM_SET
+
+    #ifdef FORM_SET_TYPEDEF
+    //
+    // If you need any additional type definitions add them here
+    //
+    #endif
+
+    #ifdef FORM_SET_VARSTORE
+    //
+    //If you need custom varstore's define them here
+    //
+    #endif
+
+    #ifdef FORM_SET_ITEM
+    //
+    // Define controls to be added to the main page of the formset
+    //
+    BMC_POWER_RESTORE_POLICY_ONEOF
+    #endif
+
+    #ifdef FORM_SET_GOTO
+    //
+    //Define Goto
+    //
+    #endif
+
+    #ifdef FORM_SET_FORM
+        #ifndef BMCLANCONFIG_FORM_SERVERMGMT
+        #define BMCLANCONFIG_FORM_SERVERMGMT
+        #endif //#ifndef BMCLANCONFIG_FORM_SERVERMGMT
+    #endif //#ifdef FORM_SET_FORM
+#endif //#ifdef BMC_CONFIG_FORM_SET
+

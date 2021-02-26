@@ -1,0 +1,89 @@
+// *++
+	//
+// Copyright (c) 2007 - 2018, Intel Corporation. All rights reserved.<BR>
+// This program and the accompanying materials                          
+// are licensed and made available under the terms and conditions of the BSD License         
+// which accompanies this distribution.  The full text of the license may be found at        
+// http://opensource.org/licenses/bsd-license.php                                            
+//                                                                                           
+// THE PROGRAM IS DISTRIBUTED UNDER THE BSD LICENSE ON AN "AS IS" BASIS,                     
+// WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.             
+// 
+// Module Name:
+//
+//   VfrStrings.vfr
+// 
+// Abstract:
+// 
+//   String definitions for Sample Setup formset.
+// 
+// Revision History:
+// 
+// --*/
+
+
+/=#
+
+#langdef en-US  "English"
+#langdef fr-FR  "Francais"
+#langdef x-UEFI-ns "UefiNameSpace"
+
+
+#string STR_NULL_STRING                #language en-US ""
+                                       #language fr-FR ""
+#string STR_FORM_SET_TITLE             #language en-US "IPMI Configuration"
+                                       #language fr-FR "IPMI Configuration"
+#string STR_FORM_SET_TITLE_HELP        #language en-US "This is a IPMI Configuration "
+                                       #language fr-FR "This is a IPMI Configuration "
+#string STR_USER_SETTINGS_TITLE        #language en-US "BMC User Settings Page"
+                                       #language fr-FR "BMC User Settings Page"
+#string STR_USER_ADD                   #language en-US "Add BMC User "
+                                       #language fr-FR "Add BMC User "
+#string STR_USER_DELETE                #language en-US "Delete BMC User "
+                                       #language fr-FR "Delete BMC User "
+#string STR_USER_CHANGE                #language en-US "Change BMC User "
+                                       #language fr-FR "Change BMC User "
+#string STR_USER_SETTINGS_HELP         #language en-US "Add,Delete or Change BMC User "
+                                       #language fr-FR "Add,Delete or Change BMC User "
+#string STR_USER_BMC_CH_NUM            #language en-US "BMC Channel Number "
+                                       #language fr-FR "BMC Channel Number "
+#string STR_USER_LIMIT                 #language en-US "BMC User Privilege Limit "
+                                       #language fr-FR "BMC User Privilege Limit "
+#string STR_USER_LIMIT_RO              #language en-US "Read Only "
+                                       #language fr-FR "Read Only "
+#string STR_USER_LIMIT_OP              #language en-US "Operator "
+                                       #language fr-FR "Operator "
+#string STR_USER_LIMIT_AD              #language en-US "Administrator "
+                                       #language fr-FR "Administrator "
+#string STR_USER_ADD_NAME              #language en-US "Add User Name "
+                                       #language fr-FR "Add User Name "
+#string STR_USER_ADD_PW                #language en-US "Add User PassWord "
+                                       #language fr-FR "Add User PassWord "
+
+#string STR_IPMI_BMC_FIRMWARE_REVISION_HELP #language en-US "Displays BMC Firmware Revision"
+#string STR_IPMI_BMC_FIRMWARE_REVISION      #language en-US "BMC Firmware Revision"
+#string STR_IPMI_BMC_FIRMWARE_REVISION_VAL  #language en-US "Unknown"
+
+#string STR_IPMI_VERSION_HELP               #language en-US "Displays IPMI Version"
+#string STR_IPMI_VERSION                    #language en-US "IPMI Version"
+#string STR_IPMI_VERSION_VAL                #language en-US "Unknown"
+
+#string STR_IPMI_BMC_WARM_RESET_HELP        #language en-US "Press <Enter> to do Warm Reset BMC."
+#string STR_IPMI_BMC_WARM_RESET             #language en-US "BMC Warm Reset"
+
+#string STR_IPMI_BMC_STATUS                 #language en-US "BMC Status "
+                                            #language fr-FR "BMC Status "
+#string STR_IPMI_BMC_STATUS_VAL             #language en-US "Unknown "
+                                            #language fr-FR "Unknown "
+
+#string STR_BMC_INFO_HELP              #language en-US "Bmc information"
+                                       #language fr-FR "Bmc information "
+
+#string STR_DEVICE_PATH                #language en-US ""
+                                       #language fr-FR ""
+
+#string FUNCTION_NINE_STRING           #language en-US  "F9=Reset to Defaults"
+                                       #language fr-FR  "F9=Reset à Défauts"
+#string FUNCTION_TEN_STRING            #language en-US  "F10=Save"
+                                       #language fr-FR  "F10=Économiser"
+

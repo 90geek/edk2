@@ -191,7 +191,9 @@ INF  MdeModulePkg/Logo/LogoDxe.inf
 INF  MdeModulePkg/Universal/LoadFileOnFv2/LoadFileOnFv2.inf
 INF  RuleOverride = UI MdeModulePkg/Application/UiApp/UiApp.inf
 INF  MdeModulePkg/Application/BootManagerMenuApp/BootManagerMenuApp.inf
-INF  MdeModulePkg/Universal/DriverSampleDxe/DriverSampleDxe.inf
+# INF  MdeModulePkg/Universal/DriverSampleDxe/DriverSampleDxe.inf
+INF  MyDemo/DriverSampleDxe/DriverSampleDxe.inf
+# INF  MyDemo/IpmiConfigDxe/IpmiConfigDxe.inf
 
 #
 # Secure Boot Key Enroll

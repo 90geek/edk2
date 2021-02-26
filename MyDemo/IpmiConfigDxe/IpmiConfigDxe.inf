@@ -1,0 +1,105 @@
+## @file
+# This is a sample HII driver. 
+#
+# This driver shows how HII protocol, VFR and UNI files are used to create a HII 
+# driver which can be dipslayed and configured by a UEFI HII Form Browser.
+#
+# Copyright (c) 2007 - 2017, Intel Corporation. All rights reserved.<BR>
+#
+#  This program and the accompanying materials
+#  are licensed and made available under the terms and conditions of the BSD License
+#  which accompanies this distribution. The full text of the license may be found at
+#  http://opensource.org/licenses/bsd-license.php
+#  
+#  THE PROGRAM IS DISTRIBUTED UNDER THE BSD LICENSE ON AN "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
+#
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = IpmiConfig
+  MODULE_UNI_FILE                = IpmiConfig.uni
+  FILE_GUID                      = 8769e6b0-dd42-9bf0-1e60-6817b8aa7ddf
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = IpmiConfigInit
+  UNLOAD_IMAGE                   = IpmiConfigUnload
+
+#
+# The following information is for reference only and not required by the build tools.
+#
+#  VALID_ARCHITECTURES           = IA32 X64 IPF EBC
+#
+
+[Sources]
+  IpmiConfig.c
+  NVDataStruc.h
+  IpmiConfigVfrStrings.uni
+  IpmiConfigVfr.vfr
+  IpmiConfig.h
+  IpmiLib.c
+  IpmiLib.h
+# BmcUserSettingsUI/BmcUserSettingsUI.c
+#  BmcUserSettingsUI/BmcUserSettingsUI.h
+#  BmcUserSettingsUI/BmcUserSettingsUI.uni
+#  BmcLanConfigUI/BmcLanConfig.sd
+#  BmcLanConfigUI/BmcLanConfig.uni
+#  BmcLanConfigUI/BmcLanParam.c
+#  BmcPowerRestoreUI/BmcPowerRestoreUI.c
+#  BmcPowerRestoreUI/BmcPowerRestoreUI.h
+#  BmcPowerRestoreUI/BmcPowerRestoreUI.sd
+#  BmcPowerRestoreUI/BmcPowerRestoreUI.uni
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+#  LoongsonDemoBoardPkg/Script/Loongson.dec
+#  LoongsonPlatformPkg/IpmiPkg/IpmiPkg.dec
+  EmulatorPkg/EmulatorPkg.dec
+
+
+[LibraryClasses]
+  BaseLib
+  MemoryAllocationLib
+  UefiBootServicesTableLib
+  UefiDriverEntryPoint
+  UefiRuntimeServicesTableLib
+  BaseMemoryLib
+  DebugLib
+  HiiLib
+  PrintLib
+  UefiLib
+  DevicePathLib
+#BmcUserSettingsLib
+
+[Guids]
+  gEfiIfrTianoGuid                            ## PRODUCES ## UNDEFINED
+  gEfiIfrRefreshIdOpGuid
+  gIpmiConfigFormSetGuid
+  gEfiIfrAdvancedManagerGuid
+  gEfiIfrBootMaintenanceGuid
+#gBmcUserSettingsVendorGuid
+#  gIpmiSetPowerRestorePolicyVendorGuid
+
+[Protocols]
+  ## PRODUCES # DriverSampleFormSet
+  ## PRODUCES # DriverSampleInventory
+  gEfiDevicePathProtocolGuid
+  gEfiHiiStringProtocolGuid                     ## CONSUMES
+  gEfiHiiConfigRoutingProtocolGuid              ## CONSUMES
+  gEfiHiiConfigAccessProtocolGuid               ## PRODUCES
+  gEfiFormBrowser2ProtocolGuid                  ## CONSUMES
+  gEfiHiiDatabaseProtocolGuid                   ## CONSUMES
+  gEfiSimpleTextInputExProtocolGuid             ## SOMETIMES_CONSUMES
+  gEdkiiFormBrowserExProtocolGuid               ## CONSUMES
+  gEfiConfigKeywordHandlerProtocolGuid          ## CONSUMES
+  gEfiHiiPopupProtocolGuid                      ## CONSUMES
+#  gEfiDxeIpmiTransportProtocolGuid      #CONSUMES
+
+[Depex]
+  gEfiSimpleTextOutProtocolGuid AND gEfiHiiDatabaseProtocolGuid AND gEfiVariableArchProtocolGuid AND gEfiVariableWriteArchProtocolGuid
+
+[UserExtensions.TianoCore."ExtraFiles"]
+  DriverSampleExtra.uni

@@ -1110,4 +1110,21 @@ HiiUpdateForm (
   IN VOID            *EndOpCodeHandle     OPTIONAL
   );
 
+UINT8 *
+EFIAPI
+HiiCreatePasswordOpCode (
+  IN VOID             *OpCodeHandle,
+  IN EFI_QUESTION_ID  QuestionId,
+  IN EFI_VARSTORE_ID  VarStoreId,
+  IN UINT16           VarOffset,
+  IN EFI_STRING_ID    Prompt,
+  IN EFI_STRING_ID    Help,
+  IN UINT8            QuestionFlags,
+  IN UINT8            StringFlags,
+  IN UINT8            MinSize,
+  IN UINT8            MaxSize,
+  IN VOID             *DefaultsOpCodeHandle  OPTIONAL
+  );
+
+
 #endif

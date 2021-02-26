@@ -33,7 +33,7 @@
   DEFINE NETWORK_TLS_ENABLE       = FALSE
   DEFINE NETWORK_HTTP_BOOT_ENABLE = FALSE
   DEFINE NETWORK_ISCSI_ENABLE     = FALSE
-  DEFINE SECURE_BOOT_ENABLE       = FALSE
+  DEFINE SECURE_BOOT_ENABLE       = TRUE
 
 [SkuIds]
   0|DEFAULT
@@ -288,7 +288,10 @@
   ##
   #  PEI Phase modules
   ##
-  MdeModulePkg/Core/Pei/PeiMain.inf
+  MdeModulePkg/Core/Pei/PeiMain.inf {
+    <BuildOptions>
+        *_*_*_CC_FLAGS=-O0
+  }
   MdeModulePkg/Universal/PCD/Pei/Pcd.inf  {
    <LibraryClasses>
       PcdLib|MdePkg/Library/BasePcdLibNull/BasePcdLibNull.inf
@@ -380,6 +383,7 @@
       NULL|MdeModulePkg/Library/DeviceManagerUiLib/DeviceManagerUiLib.inf
       NULL|MdeModulePkg/Library/BootManagerUiLib/BootManagerUiLib.inf
       NULL|MdeModulePkg/Library/BootMaintenanceManagerUiLib/BootMaintenanceManagerUiLib.inf
+      NULL|MyDemo/AdvancedManagerUiLib/AdvancedManagerUiLib.inf
   }
   MdeModulePkg/Application/BootManagerMenuApp/BootManagerMenuApp.inf
 
@@ -409,10 +413,13 @@
   MdeModulePkg/Universal/DisplayEngineDxe/DisplayEngineDxe.inf
   MdeModulePkg/Universal/SetupBrowserDxe/SetupBrowserDxe.inf
   MdeModulePkg/Universal/PrintDxe/PrintDxe.inf
-  MdeModulePkg/Universal/DriverSampleDxe/DriverSampleDxe.inf {
+  MyDemo/DriverSampleDxe/DriverSampleDxe.inf {
+  # MdeModulePkg/Universal/DriverSampleDxe/DriverSampleDxe.inf {
     <LibraryClasses>
       PcdLib|MdePkg/Library/BasePcdLibNull/BasePcdLibNull.inf
   }
+
+  # MyDemo/IpmiConfigDxe/IpmiConfigDxe.inf
 
   FatPkg/EnhancedFatDxe/Fat.inf
 

@@ -4479,3 +4479,46 @@ Finish:
 
   return Status;
 }
+
+UINT8 *
+EFIAPI
+HiiCreatePasswordOpCode (
+  IN VOID             *OpCodeHandle,
+  IN EFI_QUESTION_ID  QuestionId,
+  IN EFI_VARSTORE_ID  VarStoreId,
+  IN UINT16           VarOffset,
+  IN EFI_STRING_ID    Prompt,
+  IN EFI_STRING_ID    Help,
+  IN UINT8            QuestionFlags,
+  IN UINT8            StringFlags,
+  IN UINT8            MinSize,
+  IN UINT8            MaxSize,
+  IN VOID             *DefaultsOpCodeHandle  OPTIONAL
+  )
+{
+  EFI_IFR_PASSWORD  OpCode;
+  UINTN             Position;
+
+  ASSERT ((QuestionFlags & (~(EFI_IFR_FLAG_READ_ONLY | EFI_IFR_FLAG_CALLBACK | EFI_IFR_FLAG_RESET_REQUIRED))) == 0);
+
+  ZeroMem (&OpCode, sizeof (OpCode));
+  OpCode.Question.Header.Prompt          = Prompt;
+  OpCode.Question.Header.Help            = Help;
+  OpCode.Question.QuestionId             = QuestionId;
+  OpCode.Question.VarStoreId             = VarStoreId;
+  OpCode.Question.VarStoreInfo.VarOffset = VarOffset;
+  OpCode.Question.Flags                  = QuestionFlags;
+  OpCode.MinSize                         = MinSize;
+  OpCode.MaxSize                         = MaxSize;
+
+  if (DefaultsOpCodeHandle == NULL) {
+    return InternalHiiCreateOpCode (OpCodeHandle, &OpCode, EFI_IFR_PASSWORD_OP, sizeof (OpCode));
+  }
+
+  Position = InternalHiiOpCodeHandlePosition (OpCodeHandle);
+  InternalHiiCreateOpCodeExtended (OpCodeHandle, &OpCode, EFI_IFR_PASSWORD_OP, sizeof (OpCode), 0, 1);
+  InternalHiiAppendOpCodes (OpCodeHandle, DefaultsOpCodeHandle);
+  HiiCreateEndOpCode (OpCodeHandle);
+  return InternalHiiOpCodeHandleBuffer (OpCodeHandle) + Position;
+}
+

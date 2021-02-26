@@ -1,0 +1,35 @@
+///** @file
+//
+//  String definitions for the Device Manager.
+//
+//  Copyright (c) 2004 - 2017, Intel Corporation. All rights reserved.<BR>
+//  This program and the accompanying materials
+//  are licensed and made available under the terms and conditions of the BSD License
+//  which accompanies this distribution.  The full text of the license may be found at
+//  http://opensource.org/licenses/bsd-license.php
+//
+//  THE PROGRAM IS DISTRIBUTED UNDER THE BSD LICENSE ON AN "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
+//
+//**/
+
+/=#
+
+#langdef   en-US "English"
+#langdef   fr-FR "Français"
+
+#string STR_NULL_STRING                #language en-US  " "
+                                       #language fr-FR  " "
+#string STR_EDKII_MENU_TITLE           #language en-US  "Advanced Manager"
+                                       #language fr-FR  "Advanced Manager"
+#string STR_EDKII_MENU_HELP            #language en-US  "This selection will take you to the Advanced Manager"
+                                       #language fr-FR  "This selection will take you to the Advanced Manager"
+#string STR_ADVANCED_SETTING           #language en-US  "Advanced Settings"
+                                       #language fr-FR  "Advanced Settings"
+#string STR_MISSING_STRING             #language en-US  "Missing String"
+                                       #language fr-FR  "Missing String"
+#string STR_EMPTY_STRING               #language en-US  ""
+                                       #language fr-FR  ""
+#string STR_EXIT_STRING                #language en-US  "Press ESC to exit."
+                                       #language fr-FR  "Press ESC to exit."
+

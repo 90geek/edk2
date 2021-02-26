@@ -1,0 +1,45 @@
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = main                   #输出文件的名字为 main.efi
+  FILE_GUID                      = 6987936E-ED34-ffdb-AE97-1FA5E4ED2117
+  MODULE_TYPE                    = UEFI_APPLICATION #模块类型：UEFI_DRIVER,DXE_DRIVER,DXE_RUNTIME_DRIVER,UEFI_APPLICATION,BASE,等
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = UefiMain               #入口函数
+
+  UEFI_HII_RESOURCE_SECTION      = TRUE
+#
+# The following information is for reference only and not required by the build tools.
+#
+#  VALID_ARCHITECTURES           = IA32 X64 IPF EBC
+#
+
+# 源文件
+[Sources]
+  main.c
+
+# .dec里面定义 include的路径
+[Packages]
+  MdePkg/MdePkg.dec
+
+#要链接的库
+[LibraryClasses]
+  UefiApplicationEntryPoint
+  UefiLib
+
+[Protocols] 
+[FeaturePcd]
+[Pcd.common]
+[Guids]
+ 
+#编译选项， = 表示选项附加到默认选项后面。 == 表示仅使用所定义的选项，弃用默认选项。
+[BuildOptions]
+  #MSFT:*_*_*_CC_FLAGS ==  /nologo /c /WX /GS- /W4 /Gs32768 /D UNICODE /O1ib2 /GL  /EHs-c- /GR- /GF /Gy /Zi /Gm /D EFI_SPECIFICATION_VERSION=0x0002000A /D TIANO_RELEASE_VERSION=0x00080006 /FAs /Oi-
+  #MSFT:*_*_*_CC_FLAGS =   /wd4804 
+  #MSFT:Debug_*_IA32_CC_FLAGS = 
+  #MSFT:Debug_*_X64_CC_FLAGS = 
+  #MSFT:Release_*_IA32_CC_FLAGS = 
+  #MSFT:Release_*_IA32_CC_FLAGS = 
+  #MSFT:Release_*_IA32_DLINK_FLAGS = 
+  #GCC:Release_*_IA32_CC_FLAGS = 

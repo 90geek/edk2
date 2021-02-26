@@ -1,0 +1,266 @@
+///** @file
+//
+//    Sample Setup formset.
+//
+//  Copyright (c) 2004 - 2018, Intel Corporation. All rights reserved.<BR>
+//  This program and the accompanying materials
+//  are licensed and made available under the terms and conditions of the BSD License
+//  which accompanies this distribution.  The full text of the license may be found at
+//  http://opensource.org/licenses/bsd-license.php
+//
+//  THE PROGRAM IS DISTRIBUTED UNDER THE BSD LICENSE ON AN "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
+//
+//**/
+#define BMC_LAN_COUNT 2
+#define BMC_CONFIG_FORM_SET
+#define FORM_SET_TYPEDEF
+#include "BmcLanConfigUI/BmcLanConfig.sd"
+#undef FORM_SET_TYPEDEF
+
+#include "NVDataStruc.h"
+//
+// Labels definition
+//
+#define LABEL_1_VALUE               0x01
+#define LABEL_2_VALUE               0x1000
+#define LABEL_UPDATE_BBS            0x2222
+
+formset
+  guid      = IPMI_CONFIG_FORMSET_GUID,
+  title     = STRING_TOKEN(STR_FORM_SET_TITLE),
+  help      = STRING_TOKEN(STR_FORM_SET_TITLE_HELP),
+  classguid = gEfiIfrAdvancedManagerGuid,
+
+  //
+  // Define a Bmc User Settings Storage (EFI_IFR_VARSTORE)
+  //
+  varstore BmcIpmiConfigData,               // This is the data structure type
+    varid = BMC_USER_SETTINGS_VARSTORE_ID,  // Optional VarStore ID
+    name  = BmcIpmiConfigVar,                    // Define referenced name in vfr
+    guid  = IPMI_CONFIG_FORMSET_GUID;       // GUID of this buffer storage
+
+  //
+  // Define a Form (EFI_IFR_FORM)
+  //
+  form formid = IPMI_CONFIG_FIRST_PAGE_ID,            // Form ID
+       title  = STRING_TOKEN(STR_FORM_SET_TITLE);    // Form title
+
+    subtitle text = STRING_TOKEN(STR_FORM_SET_TITLE);
+
+    subtitle text = STRING_TOKEN(STR_NULL_STRING);
+
+    //
+    // Define a display only text (EFI_IFR_TEXT)
+    //
+    text
+      help   = STRING_TOKEN(STR_BMC_INFO_HELP),
+      text   = STRING_TOKEN(STR_IPMI_BMC_STATUS),
+        text   = STRING_TOKEN(STR_IPMI_BMC_STATUS_VAL);
+    text
+      help   = STRING_TOKEN(STR_BMC_INFO_HELP),
+      text   = STRING_TOKEN(STR_IPMI_BMC_FIRMWARE_REVISION),
+        text   = STRING_TOKEN(STR_IPMI_BMC_FIRMWARE_REVISION_VAL);
+
+    subtitle text = STRING_TOKEN(STR_NULL_STRING);
+
+   goto IPMI_USER_SETTINGS_ID,
+      prompt = STRING_TOKEN(STR_BMC_USER_SETTINGS_TITLE), //SecondSetupPage  // this too has no end-op and basically it's a jump to a form ONLY
+      help   = STRING_TOKEN(STR_BMC_USER_SETTINGS_HELP);
+
+  #define FORM_SET_GOTO
+  #include "BmcLanConfigUI/BmcLanConfig.sd"
+  #undef FORM_SET_GOTO
+
+
+  #define FORM_SET_ITEM
+  #include "BmcPowerRestoreUI/BmcPowerRestoreUI.sd"
+  #undef FORM_SET_ITEM
+
+  endform;
+
+  form formid = IPMI_USER_SETTINGS_ID,
+       title = STRING_TOKEN(STR_BMC_USER_SETTINGS_TITLE); 
+
+      text
+        help = STRING_TOKEN(STR_NULL_STRING),
+        text = STRING_TOKEN(STR_NULL_STRING),
+        flags  = INTERACTIVE,
+        key    = BMC_USER_SETTINGS_KEY;
+
+    label LABEL_UPDATE3;
+    label LABEL_END;
+
+  numeric varid   = BmcIpmiConfigVar.BmcUserAllowableChannelNum,
+    prompt  = STRING_TOKEN(STR_BMC_ALLOWABLE_CHANNEL_NUMBER),
+    help    = STRING_TOKEN(STR_BMC_ALLOWABLE_CHANNEL_NUMBER),
+    flags   = READ_ONLY,
+    minimum = 0,
+    maximum = 0xf0,
+    step    = 0,
+    endnumeric;
+
+  text
+      help   = STRING_TOKEN(STR_BMC_USER_LIST_HELP),
+      text   = STRING_TOKEN(STR_BMC_USER_LIST),
+        text   = STRING_TOKEN(STR_BMC_USER_LIST_VAL);
+
+  goto IPMI_USER_ADD_ID,
+    prompt = STRING_TOKEN(STR_ADD_BMC_USER),
+    help   = STRING_TOKEN(STR_ADD_BMC_USER_HELP),
+    flags  = INTERACTIVE,
+    key    = ADD_BMC_USER_KEY;
+
+  goto IPMI_USER_DELETE_ID,
+    prompt = STRING_TOKEN(STR_DELETE_BMC_USER),
+    help   = STRING_TOKEN(STR_USER_SETTINGS_HELP),
+    flags  = INTERACTIVE,
+    key    = DELETE_BMC_USER_KEY;
+
+
+  goto IPMI_USER_CHANGE_ID,
+    prompt = STRING_TOKEN(STR_CHANGE_BMC_USER_SETTINGS),
+    help   = STRING_TOKEN(STR_CHANGE_BMC_USER_SETTINGS_HELP),
+    flags  = INTERACTIVE,
+    key    = CHANGE_BMC_USER_SETTINGS_KEY;
+
+  endform;
+
+  form formid = IPMI_USER_ADD_ID,
+      title = STRING_TOKEN(STR_BMC_ADD_USER_TITLE);
+      subtitle text = STRING_TOKEN(STR_BMC_ADD_USER_TITLE);
+      subtitle text = STRING_TOKEN(STR_NULL_STRING);
+
+    string varid    = BmcIpmiConfigVar.AddBmcUserName,
+      prompt   = STRING_TOKEN(STR_BMC_USER_NAME),
+      help     = STRING_TOKEN(STR_BMC_USER_NAME_HELP),
+      flags    = INTERACTIVE,
+      key      = ADD_BMC_USER_NAME_KEY,
+      minsize  = 1,
+      maxsize  = MAX_BMC_USER_NAME_LENGTH,
+      endstring;
+
+    string varid = BmcIpmiConfigVar.AddBmcUserPassword,
+      prompt = STRING_TOKEN(STR_BMC_USER_PASSWORD),
+      help = STRING_TOKEN(STR_BMC_USER_PASSWORD_HELP),
+      flags    = INTERACTIVE,
+      key      = ADD_BMC_USER_PASSWORD_KEY,
+      minsize = MIN_BMC_USER_PASSWORD_LENGTH,
+      maxsize = MAX_BMC_USER_PASSWORD_LENGTH,
+    endstring;
+
+    numeric varid   = BmcIpmiConfigVar.AddBmcChannelNo,
+      prompt  = STRING_TOKEN(STR_BMC_CHANNEL_NUMBER),
+      help    = STRING_TOKEN(STR_BMC_CHANNEL_NUMBER_HELP),
+      flags   = INTERACTIVE,
+      key     = ADD_BMC_USER_CHANNEL_NO_KEY,
+      minimum = 0,
+      maximum = 0x15,
+      default = 0,
+    endnumeric;
+
+    oneof varid = BmcIpmiConfigVar.AddBmcUserPrivilegeLimit,
+      questionid = ADD_BMC_USER_PRIVILEGE_LIMIT_KEY,
+      prompt = STRING_TOKEN(STR_BMC_USER_PRIVILEGE_LIMIT),
+      help = STRING_TOKEN(STR_BMC_USER_PRIVILEGE_LIMIT_HELP),
+      option text = STRING_TOKEN(STR_RESERVED), value = 0, flags = DEFAULT | INTERACTIVE;
+      option text = STRING_TOKEN(STR_CALLBACK), value = 1, flags = INTERACTIVE;
+      option text = STRING_TOKEN(STR_USER), value=2, flags=INTERACTIVE;
+      option text = STRING_TOKEN(STR_OPERATOR), value=3, flags=INTERACTIVE;
+      option text = STRING_TOKEN(STR_ADMINISTRATOR), value=4, flags=INTERACTIVE;
+    endoneof;
+  endform;
+
+  form formid = IPMI_USER_DELETE_ID,
+       title = STRING_TOKEN(STR_BMC_DELETE_USER_TITLE);
+        subtitle text = STRING_TOKEN(STR_BMC_DELETE_USER_TITLE);
+        subtitle text = STRING_TOKEN(STR_NULL_STRING);
+
+    string varid    = BmcIpmiConfigVar.DeleteBmcUserName,
+      prompt   = STRING_TOKEN(STR_BMC_USER_NAME),
+      help     = STRING_TOKEN(STR_BMC_USER_NAME_HELP),
+      flags    = INTERACTIVE,
+      key      = DELETE_BMC_USER_NAME_KEY,
+      minsize  = 1,
+      maxsize  = MAX_BMC_USER_NAME_LENGTH,
+    endstring;
+
+    string varid = BmcIpmiConfigVar.DeleteBmcUserPassword,
+      prompt = STRING_TOKEN(STR_BMC_USER_PASSWORD),
+      help = STRING_TOKEN(STR_BMC_USER_PASSWORD_HELP),
+      flags    = INTERACTIVE,
+      key      = DELETE_BMC_USER_PASSWORD_KEY,
+      minsize = MIN_BMC_USER_PASSWORD_LENGTH,
+      maxsize = MAX_BMC_USER_PASSWORD_LENGTH,
+    endstring;
+
+  endform;
+
+  form formid = IPMI_USER_CHANGE_ID,
+       title = STRING_TOKEN(STR_BMC_CHANGE_USER_SETTINGS_TITLE);
+
+    subtitle text = STRING_TOKEN(STR_BMC_CHANGE_USER_CUR_SUBTITLE);
+    string varid    = BmcIpmiConfigVar.ChangeUserSettingsBmcCurrentUserName,
+      prompt   = STRING_TOKEN(STR_BMC_USER_NAME),
+      help     = STRING_TOKEN(STR_BMC_USER_NAME_HELP),
+      flags    = INTERACTIVE,
+      key      = CHANGE_USER_SETTINGS_BMC_CURRENT_USER_NAME_KEY,
+      minsize  = 1,
+      maxsize  = MAX_BMC_USER_NAME_LENGTH,
+    endstring;
+
+    string varid = BmcIpmiConfigVar.ChangeUserSettingsBmcCurrentUserPassword,
+      prompt = STRING_TOKEN(STR_BMC_USER_PASSWORD),
+      help = STRING_TOKEN(STR_BMC_USER_PASSWORD_HELP),
+      flags    = INTERACTIVE,
+      key      = CHANGE_USER_SETTINGS_BMC_USER_CURRENT_PASSWORD_KEY,
+      minsize = MIN_BMC_USER_PASSWORD_LENGTH,
+      maxsize = MAX_BMC_USER_PASSWORD_LENGTH,
+    endstring;
+
+    subtitle text = STRING_TOKEN(STR_NULL_STRING);
+    subtitle text = STRING_TOKEN(STR_BMC_CHANGE_USER_SUBTITLE);
+    string varid = BmcIpmiConfigVar.ChangeUserSettingsBmcUserPassword,
+      prompt = STRING_TOKEN(STR_BMC_USER_PASSWORD),
+      help = STRING_TOKEN(STR_BMC_USER_PASSWORD_HELP),
+      flags    = INTERACTIVE,
+      key      = CHANGE_USER_SETTINGS_BMC_USER_PASSWORD_KEY,
+      minsize = MIN_BMC_USER_PASSWORD_LENGTH,
+      maxsize = MAX_BMC_USER_PASSWORD_LENGTH,
+    endstring;
+
+    numeric varid   = BmcIpmiConfigVar.ChangeUserSettingsBmcChannelNo,
+      prompt  = STRING_TOKEN(STR_BMC_CHANNEL_NUMBER),
+      help    = STRING_TOKEN(STR_BMC_CHANNEL_NUMBER_HELP),
+      flags   = INTERACTIVE,
+      key     = CHANGE_USER_SETTINGS_BMC_USER_CHANNEL_NO_KEY,
+      minimum = 0,
+      maximum = 15,
+      default = 0,
+    endnumeric;
+
+    oneof varid = BmcIpmiConfigVar.ChangeUserSettingsBmcUserPrivilegeLimit,
+      questionid = CHANGE_USER_SETTINGS_BMC_USER_PRIVILEGE_LIMIT_KEY,
+      prompt = STRING_TOKEN(STR_BMC_USER_PRIVILEGE_LIMIT),
+      help = STRING_TOKEN(STR_BMC_USER_PRIVILEGE_LIMIT_HELP),
+      option text = STRING_TOKEN(STR_RESERVED), value = 0, flags = DEFAULT | INTERACTIVE;
+      option text = STRING_TOKEN(STR_CALLBACK), value = 1, flags = INTERACTIVE;
+      option text = STRING_TOKEN(STR_USER), value=2, flags=INTERACTIVE;
+      option text = STRING_TOKEN(STR_OPERATOR), value=3, flags=INTERACTIVE;
+      option text = STRING_TOKEN(STR_ADMINISTRATOR), value=4, flags=INTERACTIVE;
+    endoneof;
+
+    checkbox varid   = BmcIpmiConfigVar.ChangeUserSettingsBmcUser,
+      questionid = CHANGE_USER_SETTINGS_BMC_USER_KEY,
+      prompt   = STRING_TOKEN(STR_BMC_USER),
+      help     = STRING_TOKEN(STR_BMC_USER_HELP),
+      flags    = INTERACTIVE,
+    endcheckbox;
+
+  endform;
+
+    #define FORM_SET_FORM
+    #include "BmcLanConfigUI/BmcLanConfig.sd"
+    #undef FORM_SET_FORM
+
+endformset;

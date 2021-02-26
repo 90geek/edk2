@@ -1,0 +1,329 @@
+//
+// @file  BmcLanConfig.sd
+//
+//  Contains the setup description for BMC Network Page
+//
+
+#ifdef BMC_LAN_CONFIGURATION_DATA_DEFINITION
+//***********************************************************
+// Put NVRAM data definitions here.
+// For example:    UINT8 Data1;
+// These definitions will be converted by the build process
+// to a definitions of BmcIpmiConfigVar fields.
+//***********************************************************
+    /* UINT8         BmcLan1; */
+    /* CHAR16        StationIp1[15]; */
+    /* CHAR16        Subnet1[15]; */
+    /* CHAR16        RouterIp1[15]; */
+    /* CHAR16        RouterMac1[17]; */
+/* #if BMC_LAN_COUNT == 2 */
+    /* UINT8         BmcLan2; */
+    /* CHAR16        StationIp2[15]; */
+    /* CHAR16        Subnet2[15]; */
+    /* CHAR16        RouterIp2[15]; */
+    /* CHAR16        RouterMac2[17]; */
+/* #endif //#if BMC_LAN_COUNT == 2 */
+#endif //#ifdef BMC_LAN_CONFIGURATION_DATA_DEFINITION
+/* #if 1 */
+#if defined(VFRCOMPILE) && !defined(CONTROLS_ARE_DEFINED)
+#define CONTROL_DEFINITION
+#endif
+
+#ifdef CONTROL_DEFINITION
+
+#define BMCLANCONFIG_ONEOF_BMCLAN1\
+    oneof varid = BmcIpmiConfigVar.BmcIpPara[0].BmcLanMode,\
+        questionid = BMC_NETWORK_ADDR_MODE,\
+        prompt      = STRING_TOKEN(STR_LAN_OPTION),\
+        help        = STRING_TOKEN(STR_LAN_OPTION_HELP),\
+        option text = STRING_TOKEN(STR_UNSPECIFIED), value = 0, flags = DEFAULT | RESET_REQUIRED |INTERACTIVE ;\
+        option text = STRING_TOKEN(STR_BIOS_STATIC), value = 1, flags = RESET_REQUIRED | INTERACTIVE;\
+        option text = STRING_TOKEN(STR_BMC_DYNAMIC),  value = 2, flags = RESET_REQUIRED | INTERACTIVE;\
+        option text = STRING_TOKEN(STR_BMC_ADDR_PROTOCOL), value = 4, flags = RESET_REQUIRED | INTERACTIVE;\
+    endoneof;
+
+#define BMCLANCONFIG_ONEOF_BMCLAN2\
+    oneof varid = BmcIpmiConfigVar.BmcIpPara[1].BmcLanMode,\
+        questionid = BMC_NETWORK_ADDR_MODE2,\
+        prompt      = STRING_TOKEN(STR_LAN_OPTION),\
+        help        = STRING_TOKEN(STR_LAN_OPTION_HELP),\
+        option text = STRING_TOKEN(STR_UNSPECIFIED), value = 0, flags = DEFAULT | RESET_REQUIRED | INTERACTIVE;\
+        option text = STRING_TOKEN(STR_BIOS_STATIC), value = 1, flags = RESET_REQUIRED | INTERACTIVE;\
+        option text = STRING_TOKEN(STR_BMC_DYNAMIC),  value = 2, flags = RESET_REQUIRED | INTERACTIVE;\
+        option text = STRING_TOKEN(STR_BMC_ADDR_PROTOCOL), value = 4, flags = RESET_REQUIRED | INTERACTIVE;\
+    endoneof;
+
+#define BMCLANCONFIG_STRING_STATIONIP1\
+    string varid = BmcIpmiConfigVar.BmcIpPara[0].StationIp,\
+        prompt = STRING_TOKEN(STR_STATION_IP_ADDRESS),\
+        help = STRING_TOKEN(STR_STATION_IP_HELP),\
+        flags = INTERACTIVE,\
+        key = AUTO_ID(BMC_NETWORK_STATION_IP_KEY),\
+        minsize = 7,\
+        maxsize = 15,\
+    endstring;
+
+#define BMCLANCONFIG_STRING_SUBNET1\
+    string varid = BmcIpmiConfigVar.BmcIpPara[0].Subnet,\
+        prompt = STRING_TOKEN(STR_SUBNET_MASK),\
+        help = STRING_TOKEN(STR_SUBNET_MASK_HELP),\
+        flags = INTERACTIVE,\
+        key = AUTO_ID(BMC_NETWORK_SUBNET_KEY),\
+        minsize = 7,\
+        maxsize = 15,\
+    endstring;
+
+#define BMCLANCONFIG_STRING_ROUTERIP1\
+    string varid = BmcIpmiConfigVar.BmcIpPara[0].RouterIp,\
+        prompt = STRING_TOKEN(STR_ROUTER_IP_ADDRESS),\
+        help = STRING_TOKEN(STR_ROUTER_IP_HELP),\
+        flags = INTERACTIVE,\
+        key = AUTO_ID(BMC_NETWORK_ROUTER_IP_KEY),\
+        minsize = 7,\
+        maxsize = 15,\
+    endstring;
+
+#define BMCLANCONFIG_STRING_ROUTERMAC1\
+    string varid = BmcIpmiConfigVar.BmcIpPara[0].RouterMac,\
+        prompt = STRING_TOKEN(STR_ROUTER_MAC_ADDRESS),\
+        help = STRING_TOKEN(STR_ROUTER_MAC_HELP),\
+        flags = INTERACTIVE,\
+        key = AUTO_ID(BMC_NETWORK_ROUTER_MAC_KEY),\
+        minsize = 17,\
+        maxsize = 17,\
+    endstring;
+
+#define BMCLANCONFIG_STRING_STATIONIP2\
+    string varid = BmcIpmiConfigVar.BmcIpPara[1].StationIp,\
+        prompt = STRING_TOKEN(STR_STATION_IP_ADDRESS),\
+        help = STRING_TOKEN(STR_STATION_IP_HELP),\
+        flags = INTERACTIVE,\
+        key = AUTO_ID(BMC_NETWORK_STATION_IP2_KEY),\
+        minsize = 7,\
+        maxsize = 15,\
+    endstring;
+
+#define BMCLANCONFIG_STRING_SUBNET2\
+    string varid = BmcIpmiConfigVar.BmcIpPara[1].Subnet,\
+        prompt = STRING_TOKEN(STR_SUBNET_MASK),\
+        help = STRING_TOKEN(STR_SUBNET_MASK_HELP),\
+        flags = INTERACTIVE,\
+        key = AUTO_ID(BMC_NETWORK_SUBNET2_KEY),\
+        minsize = 7,\
+        maxsize = 15,\
+    endstring;
+
+#define BMCLANCONFIG_STRING_ROUTERIP2\
+    string varid = BmcIpmiConfigVar.BmcIpPara[1].RouterIp,\
+        prompt = STRING_TOKEN(STR_ROUTER_IP_ADDRESS),\
+        help = STRING_TOKEN(STR_ROUTER_IP_HELP),\
+        flags = INTERACTIVE,\
+        key = AUTO_ID(BMC_NETWORK_ROUTER_IP2_KEY),\
+        minsize = 7,\
+        maxsize = 15,\
+    endstring;
+
+#define BMCLANCONFIG_STRING_ROUTERMAC2\
+    string varid = BmcIpmiConfigVar.BmcIpPara[1].RouterMac,\
+        prompt = STRING_TOKEN(STR_ROUTER_MAC_ADDRESS),\
+        help = STRING_TOKEN(STR_ROUTER_MAC_HELP),\
+        flags = INTERACTIVE,\
+        key = AUTO_ID(BMC_NETWORK_ROUTER_MAC2_KEY),\
+        minsize = 17,\
+        maxsize = 17,\
+    endstring;
+
+#endif //#ifdef CONTROL_DEFINITION
+
+#ifdef CONTROLS_WITH_DEFAULTS
+    BMCLANCONFIG_ONEOF_BMCLAN1
+    BMCLANCONFIG_STRING_STATIONIP1
+    BMCLANCONFIG_STRING_SUBNET1
+    BMCLANCONFIG_STRING_ROUTERIP1
+    BMCLANCONFIG_STRING_ROUTERMAC1
+#if BMC_LAN_COUNT == 2
+    BMCLANCONFIG_ONEOF_BMCLAN2
+    BMCLANCONFIG_STRING_STATIONIP2
+    BMCLANCONFIG_STRING_SUBNET2
+    BMCLANCONFIG_STRING_ROUTERIP2
+    BMCLANCONFIG_STRING_ROUTERMAC2
+#endif //#if BMC_LAN_COUNT == 2
+#endif //#ifdef CONTROLS_WITH_DEFAULTS
+
+#ifdef BMC_CONFIG_FORM_SET
+
+    #ifdef FORM_SET_TYPEDEF
+    //
+    // If you need any additional type definitions add them here
+    //
+    #endif
+
+    #ifdef FORM_SET_VARSTORE
+    //
+    //If you need custom varstore's define them here
+    //
+    #endif
+
+    #ifdef FORM_SET_ITEM
+    //
+    // Define controls to be added to the main page of the formset
+    //
+    #endif
+
+    #ifdef FORM_SET_GOTO
+        /* suppressif  ideqval BmcIpmiConfigVar.BmcSupport == 0; */
+        /* grayoutif ideqval SYSTEM_ACCESS.Access == SYSTEM_PASSWORD_USER; */
+        goto BMC_NETWORK_FORM_ID,
+            prompt  = STRING_TOKEN(STR_BMC_NETWORK_TITLE),
+            help    = STRING_TOKEN(STR_BMC_NETWORK_HELP),
+            flags   = INTERACTIVE,
+            key     = AUTO_ID(BMC_NETWORK_FORM_KEY);
+        /* SUPPRESS_GRAYOUT_ENDIF */
+    #endif
+
+    #ifdef FORM_SET_FORM
+        #ifndef BMCLANCONFIG_FORM_SERVERMGMT
+        #define BMCLANCONFIG_FORM_SERVERMGMT
+        form formid = AUTO_ID(BMC_NETWORK_FORM_ID),
+            title  = STRING_TOKEN(STR_BMC_NETWORK_TITLE);
+            subtitle text = STRING_TOKEN(STR_BMC_NETWORK_LIST);
+            subtitle text = STRING_TOKEN(STR_NULL_STRING);
+
+          goto BMC_NETWORK_ETH0_ID,
+            prompt  = STRING_TOKEN(STR_ETH_PORT1),
+            help    = STRING_TOKEN(STR_BMC_NETWORK_HELP),
+            flags   = INTERACTIVE,
+            key     = AUTO_ID(BMC_NETWORK_ETH0_KEY);
+
+          goto BMC_NETWORK_ETH1_ID,
+            prompt  = STRING_TOKEN(STR_ETH_PORT2),
+            help    = STRING_TOKEN(STR_BMC_NETWORK_HELP),
+            flags   = INTERACTIVE,
+            key     = AUTO_ID(BMC_NETWORK_ETH1_KEY);
+        endform;
+
+            #if BMC_LAN_COUNT >= 1
+           form formid = AUTO_ID(BMC_NETWORK_ETH0_ID),
+              title  = STRING_TOKEN(STR_BMC_NETWORK_TITLE);
+                subtitle text = STRING_TOKEN(STR_ETH_PORT1);
+
+                subtitle text = STRING_TOKEN(STR_NULL_STRING);
+                BMCLANCONFIG_ONEOF_BMCLAN1
+                suppressif NOT ideqval BmcIpmiConfigVar.BmcIpPara[0].BmcLanMode == 1;
+                    BMCLANCONFIG_STRING_STATIONIP1
+                    BMCLANCONFIG_STRING_SUBNET1
+
+                    text help  = STRING_TOKEN (STR_BMC_STATION_MAC_ADDRESS),
+                        text = STRING_TOKEN(STR_STATION_MAC_ADDRESS),
+                        text = STRING_TOKEN(STR_STATION_MAC1_VAL),
+                        flags = 0,
+                        key   = 0;
+
+                    BMCLANCONFIG_STRING_ROUTERIP1
+                    BMCLANCONFIG_STRING_ROUTERMAC1
+                endif;
+                suppressif ideqval BmcIpmiConfigVar.BmcIpPara[0].BmcLanMode == 1;
+
+                     text help  = STRING_TOKEN (STR_CURR_LAN_OPTION_HELP),
+                        text = STRING_TOKEN(STR_CURR_LAN_OPTION),
+                        text = STRING_TOKEN(STR_CURR_LANCAS1_VAL),
+                        flags = 0,
+                        key   = 0;
+                    text help  = STRING_TOKEN (STR_BMC_STATION_IP_HELP),
+                        text = STRING_TOKEN(STR_STATION_IP_ADDRESS),
+                        text = STRING_TOKEN(STR_STATION_IP1_VAL),
+                        flags = 0,
+                        key   = 0;
+
+                    text help  = STRING_TOKEN (STR_BMC_SUBNET_MASK_HELP),
+                        text = STRING_TOKEN(STR_SUBNET_MASK),
+                        text = STRING_TOKEN(STR_SUBNET_MASK1_VAL),
+                        flags = 0,
+                        key   = 0;
+
+                    text help  = STRING_TOKEN (STR_BMC_STATION_MAC_ADDRESS),
+                        text = STRING_TOKEN(STR_STATION_MAC_ADDRESS),
+                        text = STRING_TOKEN(STR_STATION_MAC1_VAL),
+                        flags = 0,
+                        key   = 0;
+
+                    text help  = STRING_TOKEN (STR_BMC_ROUTER_IP_HELP),
+                        text = STRING_TOKEN(STR_ROUTER_IP_ADDRESS),
+                        text = STRING_TOKEN(STR_ROUTER_IP1_VAL),
+                        flags = 0,
+                        key   = 0;
+
+                    text help  = STRING_TOKEN (STR_BMC_ROUTER_MAC_HELP),
+                        text = STRING_TOKEN(STR_ROUTER_MAC_ADDRESS),
+                        text = STRING_TOKEN(STR_ROUTER_MAC1_VAL),
+                        flags = 0,
+                        key   = 0;
+                endif;
+            endform;
+            #endif //#if BMC_LAN_COUNT >= 1
+
+            #if BMC_LAN_COUNT == 2
+            form formid = AUTO_ID(BMC_NETWORK_ETH1_ID),
+              title  = STRING_TOKEN(STR_BMC_NETWORK_TITLE);
+              subtitle text = STRING_TOKEN(STR_ETH_PORT2);
+
+                subtitle text = STRING_TOKEN(STR_NULL_STRING);
+                BMCLANCONFIG_ONEOF_BMCLAN2
+                suppressif NOT ideqval BmcIpmiConfigVar.BmcIpPara[1].BmcLanMode == 1;
+                    BMCLANCONFIG_STRING_STATIONIP2
+                    BMCLANCONFIG_STRING_SUBNET2
+
+                    text help  = STRING_TOKEN (STR_BMC_STATION_MAC_ADDRESS),
+                        text = STRING_TOKEN(STR_STATION_MAC_ADDRESS),
+                        text = STRING_TOKEN(STR_STATION_MAC2_VAL),
+                        flags = 0,
+                        key   = 0;
+
+                    BMCLANCONFIG_STRING_ROUTERIP2
+                    BMCLANCONFIG_STRING_ROUTERMAC2
+                endif;
+                suppressif ideqval BmcIpmiConfigVar.BmcIpPara[1].BmcLanMode == 1;
+
+                   text help  = STRING_TOKEN (STR_CURR_LAN_OPTION_HELP),
+                        text = STRING_TOKEN(STR_CURR_LAN_OPTION),
+                        text = STRING_TOKEN(STR_CURR_LANCAS2_VAL),
+                        flags = 0,
+                        key   = 0;
+
+                    text help  = STRING_TOKEN (STR_BMC_STATION_IP_HELP),
+                        text = STRING_TOKEN(STR_STATION_IP_ADDRESS),
+                        text = STRING_TOKEN(STR_STATION_IP2_VAL),
+                        flags = 0,
+                        key   = 0;
+
+                    text help  = STRING_TOKEN (STR_BMC_SUBNET_MASK_HELP),
+                        text = STRING_TOKEN(STR_SUBNET_MASK),
+                        text = STRING_TOKEN(STR_SUBNET_MASK2_VAL),
+                        flags = 0,
+                        key   = 0;
+
+                    text help  = STRING_TOKEN (STR_BMC_STATION_MAC_ADDRESS),
+                        text = STRING_TOKEN(STR_STATION_MAC_ADDRESS),
+                        text = STRING_TOKEN(STR_STATION_MAC2_VAL),
+                        flags = 0,
+                        key   = 0;
+
+                    text help  = STRING_TOKEN (STR_BMC_ROUTER_IP_HELP),
+                        text = STRING_TOKEN(STR_ROUTER_IP_ADDRESS),
+                        text = STRING_TOKEN(STR_ROUTER_IP2_VAL),
+                        flags = 0,
+                        key   = 0;
+
+                    text help  = STRING_TOKEN (STR_BMC_ROUTER_MAC_HELP),
+                        text = STRING_TOKEN(STR_ROUTER_MAC_ADDRESS),
+                        text = STRING_TOKEN(STR_ROUTER_MAC2_VAL),
+                        flags = 0,
+                        key   = 0;
+                endif;
+            #endif //#if BMC_LAN_COUNT == 2
+        endform;
+        #endif //#ifndef BMCLANCONFIG_FORM_SERVERMGMT
+    #endif //#ifdef FORM_SET_FORM
+#endif //#ifdef BMC_CONFIG_FORM_SET
+/* #endif //if 0 */
+

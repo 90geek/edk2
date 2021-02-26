@@ -1,0 +1,14 @@
+#langdef   en-US "English"
+#langdef   zh-Hans "简体中文"
+#langdef   zh-Hant "繁體中文"
+#langdef   fr-FR "Français"
+
+
+
+#string STR_LANGUAGE_SELECT       #language en-US  "Select Language,I'm Robin"
+                                  #language zh-Hans "选择语言"
+                                  #language zh-Hant "選擇語言"
+                                  #language fr-FR  "Choisir la Langue,bochs!"
+
+#string STR_HELLOWORLD	#language en-US "%BHello, %Nworld!\n"
+#string STR_GOODBYE	#language en-US "%VGoodbye, world!%N\n"
