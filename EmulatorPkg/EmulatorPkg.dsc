@@ -249,6 +249,9 @@
   gEmulatorPkgTokenSpaceGuid.PcdEmuCpuModel|L"Intel(R) Processor Model"
   gEmulatorPkgTokenSpaceGuid.PcdEmuCpuSpeed|L"3000"
 
+  gEfiMdePkgTokenSpaceGuid.PcdUefiVariableDefaultPlatformLangCodes|"en;fr;zh-Hans;en-US;fr-FR,"
+  gEfiMdePkgTokenSpaceGuid.PcdUefiVariableDefaultLang|"eng"
+
   #  0-PCANSI, 1-VT100, 2-VT00+, 3-UTF8, 4-TTYTERM
   gEfiMdePkgTokenSpaceGuid.PcdDefaultTerminalType|1
 
@@ -366,6 +369,7 @@
   MdeModulePkg/Universal/Console/ConPlatformDxe/ConPlatformDxe.inf
   MdeModulePkg/Universal/Console/ConSplitterDxe/ConSplitterDxe.inf
   MdeModulePkg/Universal/Console/GraphicsConsoleDxe/GraphicsConsoleDxe.inf
+  MyDemo/HansFontDxe/HansFontDxe.inf
   MdeModulePkg/Universal/SerialDxe/SerialDxe.inf {
    <LibraryClasses>
       DebugLib|MdePkg/Library/BaseDebugLibNull/BaseDebugLibNull.inf
