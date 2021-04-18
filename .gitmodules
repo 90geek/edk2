@@ -1,6 +1,9 @@
 [submodule "CryptoPkg/Library/OpensslLib/openssl"]
 	path = CryptoPkg/Library/OpensslLib/openssl
 	url = https://github.com/openssl/openssl
+[submodule "MyDemo/uefi-programming"]
+  path = MyDemo/uefi-programming
+  url = https://github.com/zhenghuadai/uefi-programming.git
 [submodule "SoftFloat"]
 	path = ArmPkg/Library/ArmSoftFloatLib/berkeley-softfloat-3
 	url = https://github.com/ucb-bar/berkeley-softfloat-3.git
