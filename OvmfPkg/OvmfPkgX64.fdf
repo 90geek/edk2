@@ -260,6 +260,8 @@ INF  MdeModulePkg/Universal/CapsuleRuntimeDxe/CapsuleRuntimeDxe.inf
 INF  MdeModulePkg/Universal/Console/ConPlatformDxe/ConPlatformDxe.inf
 INF  MdeModulePkg/Universal/Console/ConSplitterDxe/ConSplitterDxe.inf
 INF  MdeModulePkg/Universal/Console/GraphicsConsoleDxe/GraphicsConsoleDxe.inf
+# INF  MyDemo/HansFontDxe/HansFontDxe.inf
+INF  MyDemo/LangFontDxe/LangFontDxe.inf
 INF  MdeModulePkg/Universal/Console/TerminalDxe/TerminalDxe.inf
 INF  MdeModulePkg/Universal/DriverHealthManagerDxe/DriverHealthManagerDxe.inf
 INF  MdeModulePkg/Universal/BdsDxe/BdsDxe.inf
@@ -313,13 +315,13 @@ INF MdeModulePkg/Logo/LogoDxe.inf
 #
 # Network modules
 #
-!if $(E1000_ENABLE)
-  FILE DRIVER = 5D695E11-9B3F-4b83-B25F-4A8D5D69BE07 {
-    SECTION PE32 = Intel3.5/EFIX64/E3522X2.EFI
-  }
-!endif
-!include NetworkPkg/Network.fdf.inc
-  INF  OvmfPkg/VirtioNetDxe/VirtioNet.inf
+# !if $(E1000_ENABLE)
+#   FILE DRIVER = 5D695E11-9B3F-4b83-B25F-4A8D5D69BE07 {
+#     SECTION PE32 = Intel3.5/EFIX64/E3522X2.EFI
+#   }
+# !endif
+# !include NetworkPkg/Network.fdf.inc
+#   INF  OvmfPkg/VirtioNetDxe/VirtioNet.inf
 
 #
 # Usb Support

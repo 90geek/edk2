@@ -913,7 +913,7 @@ BootManagerMenuEntry (
   EFI_SIMPLE_TEXT_OUTPUT_PROTOCOL *SimpleTextOut;
   UINTN                           BootTextColumn;
   UINTN                           BootTextRow;
-
+DEBUG((DEBUG_INFO,"Line %d, Func %a\n",__LINE__,__FUNCTION__));
   //
   // Set Logo status invalid when boot manager menu is launched
   //
@@ -941,6 +941,17 @@ BootManagerMenuEntry (
   EfiBootManagerRefreshAllBootOption ();
 
   BootOption = EfiBootManagerGetLoadOptions (&BootOptionCount, LoadOptionTypeBoot);
+  DEBUG((DEBUG_INFO,"BootOptionCount=%d\n",BootOptionCount));
+ 
+  for (Index = 0; Index < BootOptionCount; Index++) {
+        DEBUG ((
+          EFI_D_INFO, "    %s%04x: %s \t\t 0x%04x\n",
+          L"boot ",
+          BootOption[Index].OptionNumber,
+          BootOption[Index].Description,
+          BootOption[Index].Attributes
+          ));
+      }
 
   if (!mModeInitialized) {
     //
@@ -1069,6 +1080,7 @@ BootManagerMenuEntry (
 
   HiiRemovePackages (gStringPackHandle);
 
+DEBUG((DEBUG_INFO,"Line %d, Func %a\n",__LINE__,__FUNCTION__));
   return Status;
 
 }

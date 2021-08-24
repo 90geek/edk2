@@ -15,7 +15,7 @@
 [Defines]
   INF_VERSION                    = 0x00010006
   BASE_NAME                      = HansFontDxe
-  FILE_GUID                      = 4ea97c46-7491-4dfd-b442-74798713ce5f
+  FILE_GUID                      = cdc476e0-c57d-92d2-86bc-fd8247451825
   VERSION_STRING                 = 0.1
   MODULE_TYPE                    = UEFI_DRIVER 
   ENTRY_POINT                    = LoadFont 

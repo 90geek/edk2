@@ -53,6 +53,8 @@ UefiMain (
       // Use UefiLib Print API to print string to UEFI console
       //
       Print ((CHAR16*)PcdGetPtr (PcdHelloWorldPrintString));
+      Print(L"Hello, world!\r\n");
+      Print(L"UEFI-edk 你好..!\r\n");
     }
   }
 
