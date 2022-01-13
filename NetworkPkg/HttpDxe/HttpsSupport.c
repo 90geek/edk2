@@ -397,6 +397,8 @@ TlsConfigCertificate (
                    );
 
   if (EFI_ERROR (Status) && Status != EFI_BUFFER_TOO_SMALL) {
+    DEBUG((DEBUG_INFO,"Line is %d ,func %a\n",__LINE__,__FUNCTION__));
+    return EFI_SUCCESS;
     return Status;
   }
 
@@ -625,9 +627,10 @@ TlsConfigureSession (
   //
   HttpInstance->TlsConfigData.ConnectionEnd       = EfiTlsClient;
   HttpInstance->TlsConfigData.VerifyMethod        = EFI_TLS_VERIFY_PEER;
-  HttpInstance->TlsConfigData.VerifyHost.Flags    = EFI_TLS_VERIFY_FLAG_NO_WILDCARDS;
-  HttpInstance->TlsConfigData.VerifyHost.HostName = HttpInstance->RemoteHost;
+  // HttpInstance->TlsConfigData.VerifyHost.Flags    = EFI_TLS_VERIFY_FLAG_NO_WILDCARDS;
+  // HttpInstance->TlsConfigData.VerifyHost.HostName = HttpInstance->RemoteHost;
   HttpInstance->TlsConfigData.SessionState        = EfiTlsSessionNotStarted;
+  HttpInstance->TlsConfigData.VerifyMethod        = EFI_TLS_VERIFY_NONE;
 
   //
   // EfiTlsConnectionEnd,
@@ -655,15 +658,16 @@ TlsConfigureSession (
     return Status;
   }
 
-  Status = HttpInstance->Tls->SetSessionData (
-                                HttpInstance->Tls,
-                                EfiTlsVerifyHost,
-                                &HttpInstance->TlsConfigData.VerifyHost,
-                                sizeof (EFI_TLS_VERIFY_HOST)
-                                );
-  if (EFI_ERROR (Status)) {
-    return Status;
-  }
+  // Status = HttpInstance->Tls->SetSessionData (
+  //                               HttpInstance->Tls,
+  //                               EfiTlsVerifyHost,
+  //                               &HttpInstance->TlsConfigData.VerifyHost,
+  //                               sizeof (EFI_TLS_VERIFY_HOST)
+  //                               );
+  // if (EFI_ERROR (Status)) {
+  //   DEBUG((DEBUG_INFO,"Line is %d ,func %a--%r\n",__LINE__,__FUNCTION__,Status));
+  //   return Status;
+  // }
 
   Status = HttpInstance->Tls->SetSessionData (
                                 HttpInstance->Tls,
