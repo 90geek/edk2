@@ -477,6 +477,11 @@ TlsSetCompressionMethod (
   @param[in]  VerifyMode    A set of logically or'ed verification mode flags.
 
 **/
+static int always_true_callback(int ok, X509_STORE_CTX *ctx)
+{
+    DEBUG((DEBUG_INFO,"------1111\n"));
+    return 1;
+}
 VOID
 EFIAPI
 TlsSetVerify (
@@ -491,10 +496,14 @@ TlsSetVerify (
     return;
   }
 
+  // SSL_CTX_set_cert_verify_callback(ssl->ctx, always_true_callback, NULL);
   //
   // Set peer certificate verification parameters with NULL callback.
   //
-  SSL_set_verify (TlsConn->Ssl, VerifyMode, NULL);
+  // SSL_set_verify (TlsConn->Ssl, VerifyMode, NULL);
+  SSL_set_verify (TlsConn->Ssl, VerifyMode, always_true_callback);
+  DEBUG((DEBUG_INFO,"-------%d\n",SSL_get_verify_depth(TlsConn->Ssl)));
+  DEBUG((DEBUG_INFO,"-------%d\n",SSL_get_verify_mode(TlsConn->Ssl)));
 }
 
 /**
