@@ -179,6 +179,10 @@
 !endif
   CustomizedDisplayLib|MdeModulePkg/Library/CustomizedDisplayLib/CustomizedDisplayLib.inf
   FrameBufferBltLib|MdeModulePkg/Library/FrameBufferBltLib/FrameBufferBltLib.inf
+# !if gInsydeTokenSpaceGuid.PcdH2OFormBrowserSupported
+  DELib|InsydeSetupPkg/Library/H2ODisplayEngineLib/H2ODisplayEngineLib.inf
+  LayoutLib|InsydeSetupPkg/Library/LayoutSupportLib/LayoutSupportLib.inf
+# !endif
 
 !if $(SOURCE_DEBUG_ENABLE) == TRUE
   PeCoffExtraActionLib|SourceLevelDebugPkg/Library/PeCoffExtraActionLibDebug/PeCoffExtraActionLibDebug.inf
@@ -840,6 +844,34 @@
   MdeModulePkg/Universal/SetupBrowserDxe/SetupBrowserDxe.inf
   MdeModulePkg/Universal/DisplayEngineDxe/DisplayEngineDxe.inf
   MdeModulePkg/Universal/MemoryTest/NullMemoryTestDxe/NullMemoryTestDxe.inf
+# !if gInsydeTokenSpaceGuid.PcdH2OFormBrowserSupported
+  # InsydeModulePkg/Universal/UserInterface/H2OKeyDescDxe/H2OKeyDescDxe.inf
+  # InsydeSetupPkg/Drivers/HiiLayoutPkgDxe/HiiLayoutPkgDxe.inf
+  # InsydeSetupPkg/Drivers/H2OFormBrowserDxe/H2OFormBrowserDxe.inf
+
+# !if gInsydeTokenSpaceGuid.PcdH2OFormBrowserLocalTextDESupported
+  # InsydeSetupPkg/Drivers/H2ODisplayEngineLocalTextDxe/H2ODisplayEngineLocalTextDxe.inf
+# !endif
+
+# !if gInsydeTokenSpaceGuid.PcdH2OFormBrowserLocalMetroDESupported
+  # InsydeModulePkg/Universal/UserInterface/MicrowindowsDxe/MicrowindowsDxe.inf {
+  #   <LibraryClasses>
+  #      TimerLib|InsydeModulePkg/Library/CpuTimerLib/CpuTimerLib.inf
+  # }
+  # InsydeSetupPkg/Drivers/H2ODisplayEngineLocalMetroDxe/H2ODisplayEngineLocalMetroDxe.inf
+# !endif
+
+# !else
+# !if gInsydeTokenSpaceGuid.PcdGraphicsSetupSupported
+#   InsydeModulePkg/Universal/UserInterface/MicrowindowsDxe/MicrowindowsDxe.inf {
+#     <LibraryClasses>
+#        TimerLib|InsydeModulePkg/Library/CpuTimerLib/CpuTimerLib.inf
+#   }
+#   InsydeModulePkg/Universal/UserInterface/SetupBrowserDxe/GraphicsSetupBrowserDxe.inf
+# !else
+#   InsydeModulePkg/Universal/UserInterface/SetupBrowserDxe/SetupBrowserDxe.inf
+# !endif
+# !endif
 
 !ifndef $(CSM_ENABLE)
   OvmfPkg/QemuVideoDxe/QemuVideoDxe.inf
