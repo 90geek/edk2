@@ -73,6 +73,7 @@
   HobLib|MdeModulePkg/Library/BaseHobLibNull/BaseHobLibNull.inf
   MemoryAllocationLib|MdeModulePkg/Library/BaseMemoryAllocationLibNull/BaseMemoryAllocationLibNull.inf
   PeiServicesTablePointerLib|MdePkg/Library/PeiServicesTablePointerLib/PeiServicesTablePointerLib.inf
+  LsSeLib|UefiCpuPkg/Library/LoongsonSeLibNull/LsSeLibNull.inf
 
 [LibraryClasses.common.SEC]
   PlatformSecLib|UefiCpuPkg/Library/PlatformSecLibNull/PlatformSecLibNull.inf

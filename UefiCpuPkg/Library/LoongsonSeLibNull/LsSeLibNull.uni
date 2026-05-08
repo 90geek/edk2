@@ -1,0 +1,14 @@
+// /** @file
+// Base CPU security Library for Loongarch
+//
+// Copyright (c) 2026, Loongson Technology Corporation Limited. All rights reserved.<BR>
+//
+// SPDX-License-Identifier: BSD-2-Clause-Patent
+//
+// **/
+
+
+#string STR_MODULE_ABSTRACT             #language en-US "Loongarch CPU SE Library"
+
+#string STR_MODULE_DESCRIPTION          #language en-US "Provides random numbers and basic security support for Loongson CPU."
+
