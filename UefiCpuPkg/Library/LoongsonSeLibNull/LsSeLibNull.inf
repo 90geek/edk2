@@ -1,0 +1,35 @@
+## @file
+#  Loongson CPU SE library instance.
+#
+#  Copyright (c) 2026 Loongson Technology Corporation Limited. All rights reserved.<BR>
+#
+#  SPDX-License-Identifier: BSD-2-Clause-Patent
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = LsSeLibNull
+  FILE_GUID                      = 1ebe10d8-b7cc-c29f-55a2-c1391a215483
+  MODULE_TYPE                    = BASE
+  VERSION_STRING                 = 1.0
+  LIBRARY_CLASS                  = LsSeLib
+  MODULE_UNI_FILE                = LsSeLibNull.uni
+
+#
+#  VALID_ARCHITECTURES           = LOONGARCH
+#
+
+[Sources]
+  LsSeLibNull.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+
+[LibraryClasses]
+  BaseLib
+  DebugLib
+  TimerLib
+  BaseMemoryLib
+  MemoryAllocationLib
+  IoLib
