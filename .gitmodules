@@ -38,3 +38,6 @@
 [submodule "TcgTpmPkg/Library/TpmLib/TPM"]
 	path = TcgTpmPkg/Library/TpmLib/TPM
 	url = https://github.com/TrustedComputingGroup/TPM
+[submodule "MdeModulePkg/Library/LvglLib/lvgl"]
+	path = MdeModulePkg/Library/LvglLib/lvgl
+	url = https://github.com/lvgl/lvgl.git
