@@ -1,0 +1,42 @@
+## @file
+#
+#  PCI list print DXE driver.
+#
+#  Copyright (c) 2026 Loongson Technology Corporation Limited (www.loongson.cn).
+#
+#  SPDX-License-Identifier: BSD-2-Clause-Patent
+#
+##
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = PciListDxe
+  FILE_GUID                      = 83A9690B-D27D-4B31-8B79-5F1C1ECB6C3B
+  MODULE_TYPE                    = DXE_DRIVER
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = PciListDxeEntryPoint
+
+[Sources]
+  PciListDxe.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+
+[LibraryClasses]
+  BaseLib
+  BaseMemoryLib
+  DebugLib
+  DevicePathLib
+  MemoryAllocationLib
+  PrintLib
+  UefiBootServicesTableLib
+  UefiDriverEntryPoint
+  UefiLib
+
+[Protocols]
+  gEfiPciEnumerationCompleteProtocolGuid ## CONSUMES
+  gEfiPciIoProtocolGuid                  ## CONSUMES
+
+[Depex]
+  TRUE
