@@ -127,6 +127,12 @@
   lvgl/src/libs/bin_decoder/lv_bin_decoder.c
 
   ##
+  ## CJK bitmap fonts (14px + 18px, NotoSansSC, ASCII + common CJK)
+  ##
+  fonts/lv_font_cjk_14.c
+  fonts/lv_font_cjk_18.c
+
+  ##
   ## Misc utilities
   ##
   lvgl/src/misc/lv_anim.c

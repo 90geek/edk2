@@ -43,7 +43,7 @@ UefiMain (
   }
 
   mLabel = lv_label_create (lv_screen_active ());
-  lv_label_set_text (mLabel, "Hello UEFI lvgl!");
+  lv_label_set_text (mLabel, "\xe4\xbd\xa0\xe5\xa5\xbd UEFI lvgl!");
   lv_obj_align (mLabel, LV_ALIGN_TOP_MID, 0, 20);
 
   Btn = lv_button_create (lv_screen_active ());
