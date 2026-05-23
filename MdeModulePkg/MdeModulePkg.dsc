@@ -75,6 +75,7 @@
   PcdLib|MdePkg/Library/BasePcdLibNull/BasePcdLibNull.inf
   CustomizedDisplayLib|MdeModulePkg/Library/CustomizedDisplayLib/CustomizedDisplayLib.inf
   FrameBufferBltLib|MdeModulePkg/Library/FrameBufferBltLib/FrameBufferBltLib.inf
+  LvglLib|MdeModulePkg/Library/LvglLib/LvglLib.inf
   #
   # Misc
   #
@@ -348,6 +349,8 @@
   MdeModulePkg/Library/DisplayUpdateProgressLibText/DisplayUpdateProgressLibText.inf
   MdeModulePkg/Library/BaseRngLibTimerLib/BaseRngLibTimerLib.inf
   MdeModulePkg/Library/HobPrintLib/HobPrintLib.inf
+  MdeModulePkg/Library/LvglLib/LvglLib.inf
+  MdeModulePkg/Application/LvglDemoApp/LvglDemoApp.inf
 
   MdeModulePkg/Universal/BdsDxe/BdsDxe.inf
   MdeModulePkg/Application/BootManagerMenuApp/BootManagerMenuApp.inf

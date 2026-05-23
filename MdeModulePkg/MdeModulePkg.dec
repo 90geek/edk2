@@ -182,6 +182,9 @@
   #
   HobPrintLib|Include/Library/HobPrintLib.h
 
+  ## LvglLib — LVGL v9 GUI library (GOP display + UEFI input backends)
+  LvglLib|Include/Library/LvglLib.h
+
 [Guids]
   ## MdeModule package token space guid
   # Include/Guid/MdeModulePkgTokenSpace.h
