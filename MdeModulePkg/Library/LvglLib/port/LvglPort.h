@@ -8,7 +8,8 @@
   SPDX-License-Identifier: BSD-2-Clause-Patent
 **/
 
-#pragma once
+#ifndef LVGL_PORT_H_
+#define LVGL_PORT_H_
 
 #include <Uefi.h>
 #include <Protocol/GraphicsOutput.h>
@@ -77,3 +78,5 @@ LvglTouchInit (
 
 /** GOP protocol global pointer — shared across port files. **/
 extern EFI_GRAPHICS_OUTPUT_PROTOCOL  *gGop;
+
+#endif /* LVGL_PORT_H_ */

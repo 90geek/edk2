@@ -135,10 +135,9 @@ LvglDispInit (
   )
 {
   EFI_STATUS              Status;
-  EFI_GUID                GopGuid = EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID;
   UINT32                  HRes;
   UINT32                  VRes;
-  UINT32                  BufSize;
+  UINTN                   BufSize;
   VOID                    *Buf1;
   VOID                    *Buf2;
   lv_display_t            *Disp;
@@ -146,7 +145,7 @@ LvglDispInit (
   // ------------------------------------------------------------------
   // 1. Locate GOP
   // ------------------------------------------------------------------
-  Status = gBS->LocateProtocol (&GopGuid, NULL, (VOID **)&gGop);
+  Status = gBS->LocateProtocol (&gEfiGraphicsOutputProtocolGuid, NULL, (VOID **)&gGop);
   if (EFI_ERROR (Status)) {
     DEBUG ((DEBUG_ERROR, "LvglDisp: GOP not found: %r\n", Status));
     return NULL;
@@ -167,10 +166,11 @@ LvglDispInit (
 
   // ------------------------------------------------------------------
   // 3. Allocate two partial draw buffers
-  //    Each buffer covers width * 10 rows * 4 bytes/pixel.
-  //    This matches the lvgl recommendation of at least 1/10 screen.
+  //    PARTIAL mode flush rect can be up to VRes rows tall; allocate
+  //    (VRes / 10 + 1) rows for safety while keeping memory reasonable.
   // ------------------------------------------------------------------
-  BufSize = HRes * 10U * sizeof (UINT32);
+  /* PARTIAL mode flush rect can be up to VRes tall; allocate (VRes/10+1) rows for safety */
+  BufSize = HRes * (VRes / 10U + 1U) * sizeof (UINT32);
 
   Buf1 = AllocatePool (BufSize);
   if (Buf1 == NULL) {
