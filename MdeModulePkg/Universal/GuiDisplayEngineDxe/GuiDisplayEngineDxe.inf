@@ -1,0 +1,48 @@
+## @file
+#  GuiDisplayEngineDxe — graphical HII form display engine
+#  Drop-in replacement for DisplayEngineDxe; same protocol, graphical rendering via lvgl.
+#
+#  Copyright (c) 2026, Loongson Technology Corporation Limited.
+#  SPDX-License-Identifier: BSD-2-Clause-Patent
+##
+
+[Defines]
+  INF_VERSION    = 0x00010005
+  BASE_NAME      = GuiDisplayEngine
+  FILE_GUID      = B2C3D4E5-F6A7-8901-BCDE-F12345678901
+  MODULE_TYPE    = DXE_DRIVER
+  VERSION_STRING = 1.0
+  ENTRY_POINT    = InitializeGuiDisplayEngine
+  UNLOAD_IMAGE   = UnloadGuiDisplayEngine
+
+[Sources]
+  GuiDisplayEngine.c
+  Layout.c
+  WidgetFactory.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  UefiBootServicesTableLib
+  UefiLib
+  BaseLib
+  BaseMemoryLib
+  MemoryAllocationLib
+  DebugLib
+  PrintLib
+  LvglLib
+
+[Protocols]
+  gEdkiiFormDisplayEngineProtocolGuid     ## PRODUCES
+  gEfiHiiStringProtocolGuid               ## CONSUMES
+  gEfiGraphicsOutputProtocolGuid          ## CONSUMES (via LvglLib)
+
+[Depex]
+  gEfiHiiDatabaseProtocolGuid AND
+  gEfiGraphicsOutputProtocolGuid
+
+[BuildOptions]
+  GCC:*_*_*_CC_FLAGS = -I$(WORKSPACE)/MdeModulePkg/Library/LvglLib -I$(WORKSPACE)/MdeModulePkg/Library/LvglLib/lvgl -DLV_CONF_INCLUDE_SIMPLE

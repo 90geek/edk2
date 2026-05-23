@@ -351,6 +351,7 @@
   MdeModulePkg/Library/HobPrintLib/HobPrintLib.inf
   MdeModulePkg/Library/LvglLib/LvglLib.inf
   MdeModulePkg/Application/LvglDemoApp/LvglDemoApp.inf
+  MdeModulePkg/Universal/GuiDisplayEngineDxe/GuiDisplayEngineDxe.inf
 
   MdeModulePkg/Universal/BdsDxe/BdsDxe.inf
   MdeModulePkg/Application/BootManagerMenuApp/BootManagerMenuApp.inf
