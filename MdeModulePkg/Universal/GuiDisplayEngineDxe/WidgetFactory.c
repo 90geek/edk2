@@ -281,11 +281,21 @@ GuiCreateWidget (
     case EFI_IFR_ORDERED_LIST_OP:
       return NULL;
 
-    case EFI_IFR_REF_OP:
+    case EFI_IFR_REF_OP: {
+      EFI_IFR_REF  *Ref    = (EFI_IFR_REF *)Statement->OpCode;
+      lv_obj_t     *BtnLbl;
+
       Btn = lv_button_create (Parent);
       lv_obj_set_size (Btn, lv_pct (100), 36);
       lv_obj_set_style_bg_color (Btn, lv_color_hex (GUI_COLOR_HIGHLIGHT), 0);
+      lv_obj_set_style_radius (Btn, 4, 0);
+
+      BtnLbl = lv_label_create (Btn);
+      SetLabelFromHiiString (BtnLbl, HiiHandle, Ref->Question.Header.Prompt);
+      lv_obj_set_style_text_color (BtnLbl, lv_color_hex (0xFFFFFF), 0);
+      lv_obj_align (BtnLbl, LV_ALIGN_LEFT_MID, 8, 0);
       return Btn;
+    }
 
     default:
       return NULL;
