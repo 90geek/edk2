@@ -200,7 +200,8 @@
   TpmPlatformHierarchyLib          | SecurityPkg/Library/PeiDxeTpmPlatformHierarchyLibNull/PeiDxeTpmPlatformHierarchyLib.inf
   PlatformBmPrintScLib             | OvmfPkg/Library/PlatformBmPrintScLib/PlatformBmPrintScLib.inf
   PlatformBootManagerLib           | OvmfPkg/Library/PlatformBootManagerLibLight/PlatformBootManagerLib.inf
-  BootLogoLib                      | MdeModulePkg/Library/BootLogoLib/BootLogoLib.inf
+  BootLogoLib                      | MdeModulePkg/Library/GuiBootLogoLib/GuiBootLogoLib.inf
+  LvglLib                          | MdeModulePkg/Library/LvglLib/LvglLib.inf
   QemuBootOrderLib                 | OvmfPkg/Library/QemuBootOrderLib/QemuBootOrderLib.inf
   PlatformBootManagerCommonLib     |OvmfPkg/Library/PlatformBootManagerCommonLib/PlatformBootManagerCommonLib.inf
   QemuFwCfgSimpleParserLib         | OvmfPkg/Library/QemuFwCfgSimpleParserLib/QemuFwCfgSimpleParserLib.inf
@@ -602,7 +603,7 @@
       DevicePathLib                    | MdePkg/Library/UefiDevicePathLib/UefiDevicePathLib.inf
       PcdLib                           | MdePkg/Library/BasePcdLibNull/BasePcdLibNull.inf
   }
-  MdeModulePkg/Universal/DisplayEngineDxe/DisplayEngineDxe.inf
+  MdeModulePkg/Universal/GuiDisplayEngineDxe/GuiDisplayEngineDxe.inf
   MdeModulePkg/Universal/SetupBrowserDxe/SetupBrowserDxe.inf
   MdeModulePkg/Universal/BdsDxe/BdsDxe.inf
   MdeModulePkg/Logo/LogoDxe.inf
@@ -613,6 +614,7 @@
       NULL|MdeModulePkg/Library/BootManagerUiLib/BootManagerUiLib.inf
       NULL|MdeModulePkg/Library/BootMaintenanceManagerUiLib/BootMaintenanceManagerUiLib.inf
   }
+  MdeModulePkg/Application/GuiBootManagerMenuApp/GuiBootManagerMenuApp.inf
 
   OvmfPkg/QemuKernelLoaderFsDxe/QemuKernelLoaderFsDxe.inf {
     <LibraryClasses>
