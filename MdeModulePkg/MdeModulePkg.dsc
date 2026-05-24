@@ -322,6 +322,7 @@
   MdeModulePkg/Library/UefiBootManagerLib/UefiBootManagerLib.inf
   MdeModulePkg/Library/PlatformBootManagerLibNull/PlatformBootManagerLibNull.inf
   MdeModulePkg/Library/BootLogoLib/BootLogoLib.inf
+  MdeModulePkg/Library/GuiBootLogoLib/GuiBootLogoLib.inf
   MdeModulePkg/Library/TpmMeasurementLibNull/TpmMeasurementLibNull.inf
   MdeModulePkg/Library/TdxMeasurementLibNull/TdxMeasurementLibNull.inf
   MdeModulePkg/Library/AuthVariableLibNull/AuthVariableLibNull.inf
@@ -352,6 +353,7 @@
   MdeModulePkg/Library/LvglLib/LvglLib.inf
   MdeModulePkg/Application/LvglDemoApp/LvglDemoApp.inf
   MdeModulePkg/Universal/GuiDisplayEngineDxe/GuiDisplayEngineDxe.inf
+  MdeModulePkg/Application/GuiBootManagerMenuApp/GuiBootManagerMenuApp.inf
 
   MdeModulePkg/Universal/BdsDxe/BdsDxe.inf
   MdeModulePkg/Application/BootManagerMenuApp/BootManagerMenuApp.inf

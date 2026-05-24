@@ -1,0 +1,40 @@
+## @file
+#  GuiBootManagerMenuApp — lvgl-based graphical boot device selection menu.
+#  Drop-in replacement for BootManagerMenuApp with graphical rendering via lvgl.
+#  Uses the same FILE_GUID so PcdBootManagerMenuFile requires no override.
+#
+#  Copyright (c) 2026, Loongson Technology Corporation Limited.
+#  SPDX-License-Identifier: BSD-2-Clause-Patent
+##
+
+[Defines]
+  INF_VERSION    = 0x00010005
+  BASE_NAME      = GuiBootManagerMenuApp
+  FILE_GUID      = EEC25BDC-67F2-4D95-B1D5-F81B2039D11D
+  MODULE_TYPE    = UEFI_APPLICATION
+  VERSION_STRING = 1.0
+  ENTRY_POINT    = BootManagerMenuEntry
+
+[Sources]
+  GuiBootManagerMenuApp.c
+
+[Packages]
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+
+[LibraryClasses]
+  UefiApplicationEntryPoint
+  UefiBootServicesTableLib
+  UefiLib
+  BaseLib
+  MemoryAllocationLib
+  DebugLib
+  PrintLib
+  UefiBootManagerLib
+  LvglLib
+
+[Protocols]
+  gEfiGraphicsOutputProtocolGuid          ## CONSUMES (via LvglLib)
+
+[BuildOptions]
+  GCC:*_*_*_CC_FLAGS = -I$(WORKSPACE)/MdeModulePkg/Library/LvglLib -I$(WORKSPACE)/MdeModulePkg/Library/LvglLib/lvgl -DLV_CONF_INCLUDE_SIMPLE
