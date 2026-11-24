@@ -43,15 +43,37 @@
                                    EFI_RESOURCE_ATTRIBUTE_TESTED      )
 
 /**
+  Return the allocation granularity required by a memory type.
+
+  @param Type  The memory type.
+
+  @return The allocation granularity in bytes.
+**/
+STATIC
+UINTN
+GetMemoryTypeAllocationGranularity (
+  IN EFI_MEMORY_TYPE  Type
+  )
+{
+  if ((Type == EfiReservedMemoryType) ||
+      (Type == EfiACPIMemoryNVS) ||
+      (Type == EfiRuntimeServicesCode) ||
+      (Type == EfiRuntimeServicesData))
+  {
+    return RUNTIME_PAGE_ALLOCATION_GRANULARITY;
+  }
+
+  return DEFAULT_PAGE_ALLOCATION_GRANULARITY;
+}
+
+/**
   Calculate total memory bin size needed.
 
-  @param BinTop                The top address of the memory bins. This is an optional parameter.
-                               When NULL, the returned size meets the alignment requirements as long as
-                               the base address selected also meets the alignment requirements. When
-                               non-NULL, then the returned BinTop value and the returned size both meet
-                               the alignment requirements. When non-NULL, this will be updated on
-                               output to the new top address of the memory bins that must be used to
-                               satisfy alignment requirements.
+  @param BinTop                Optional exclusive upper bound of the memory bins; unchanged on return.
+                               When NULL, the returned size includes inter-bin padding and is rounded
+                               to RUNTIME_PAGE_ALLOCATION_GRANULARITY so an aligned allocation also
+                               has an aligned upper bound. Otherwise, the returned size includes the
+                               padding needed to place each bin below the supplied upper bound.
   @param MemoryTypeInformation The memory type information array.
 
   @return The total memory bin size needed.
@@ -59,13 +81,15 @@
 **/
 UINT64
 CalculateTotalMemoryBinSizeNeeded (
-  IN OUT OPTIONAL EFI_PHYSICAL_ADDRESS  *BinTop,
-  IN EFI_MEMORY_TYPE_INFORMATION        *MemoryTypeInformation
+  IN OPTIONAL EFI_PHYSICAL_ADDRESS  *BinTop,
+  IN EFI_MEMORY_TYPE_INFORMATION    *MemoryTypeInformation
   )
 {
-  UINTN   Index;
-  UINT64  TotalSize;
-  UINT64  Granularity;
+  UINTN                 Index;
+  UINT64                TotalSize;
+  UINTN                 Granularity;
+  UINT64                BinSize;
+  EFI_PHYSICAL_ADDRESS  Top;
 
   ASSERT (MemoryTypeInformation != NULL);
   if (MemoryTypeInformation == NULL) {
@@ -76,34 +100,29 @@ CalculateTotalMemoryBinSizeNeeded (
   // Loop through each memory type in the order specified by the MemoryTypeInformation[] array
   //
   TotalSize = 0;
+  Top       = (BinTop == NULL) ? 0 : *BinTop;
   for (Index = 0; MemoryTypeInformation[Index].Type != EfiMaxMemoryType; Index++) {
-    Granularity = DEFAULT_PAGE_ALLOCATION_GRANULARITY;
-    if ((MemoryTypeInformation[Index].Type == EfiReservedMemoryType) ||
-        (MemoryTypeInformation[Index].Type == EfiACPIMemoryNVS) ||
-        (MemoryTypeInformation[Index].Type == EfiRuntimeServicesCode) ||
-        (MemoryTypeInformation[Index].Type == EfiRuntimeServicesData))
+    if ((MemoryTypeInformation[Index].Type > EfiMaxMemoryType) ||
+        (MemoryTypeInformation[Index].NumberOfPages == 0))
     {
-      Granularity = RUNTIME_PAGE_ALLOCATION_GRANULARITY;
-    }
-
-    // MemoryTypeInformation[Index].NumberOfPages is already aligned to the allocation granularity
-    TotalSize += EFI_PAGES_TO_SIZE ((UINTN)MemoryTypeInformation[Index].NumberOfPages);
-
-    // BinTop is optional
-    if (BinTop == NULL) {
       continue;
     }
 
-    // Lower the bin top to the next aligned address, taking any padding into account in the size
-    *BinTop   -= EFI_PAGES_TO_SIZE ((UINTN)MemoryTypeInformation[Index].NumberOfPages);
-    TotalSize += (*BinTop & (Granularity - 1));
-    *BinTop   &= ~(Granularity - 1);
+    Granularity = GetMemoryTypeAllocationGranularity ((EFI_MEMORY_TYPE)MemoryTypeInformation[Index].Type);
+    // NumberOfPages has already been aligned by PopulateMemoryTypeInformation().
+    BinSize = EFI_PAGES_TO_SIZE ((UINTN)MemoryTypeInformation[Index].NumberOfPages);
+
+    if (BinTop == NULL) {
+      // Model downward allocation from an aligned upper bound using offsets.
+      TotalSize = ALIGN_VALUE (TotalSize, Granularity) + BinSize;
+    } else {
+      TotalSize += (Top & (Granularity - 1)) + BinSize;
+      Top        = (Top & ~((UINT64)Granularity - 1)) - BinSize;
+    }
   }
 
-  if (BinTop != NULL) {
-    // Set *BinTop to the new top of the memory bins. It currently points to the base address of
-    // the memory bins
-    *BinTop += TotalSize;
+  if (BinTop == NULL) {
+    TotalSize = ALIGN_VALUE (TotalSize, RUNTIME_PAGE_ALLOCATION_GRANULARITY);
   }
 
   return TotalSize;
@@ -391,6 +410,7 @@ CoreSetMemoryTypeInformationRange (
     }
 
     if (MemoryTypeInformation[Index].NumberOfPages != 0) {
+      Top                                      &= ~((UINT64)GetMemoryTypeAllocationGranularity (Type) - 1);
       MemoryTypeStatistics[Type].MaximumAddress = Top - 1;
       Top                                      -= EFI_PAGES_TO_SIZE ((UINTN)MemoryTypeInformation[Index].NumberOfPages);
       MemoryTypeStatistics[Type].BaseAddress    = Top;
@@ -525,11 +545,15 @@ AllocateMemoryTypeInformationBins (
     }
 
     if (MemoryTypeInformation[Index].NumberOfPages != 0) {
+      LastBinAddress                           &= ~((UINT64)GetMemoryTypeAllocationGranularity (Type) - 1);
       MemoryTypeStatistics[Type].BaseAddress    = LastBinAddress - EFI_PAGES_TO_SIZE (MemoryTypeInformation[Index].NumberOfPages);
       MemoryTypeStatistics[Type].MaximumAddress = LastBinAddress - 1;
       LastBinAddress                            = MemoryTypeStatistics[Type].BaseAddress;
     }
   }
+
+  // Keep any alignment padding below the last bin available for default allocations.
+  *DefaultMaximumAddress = LastBinAddress - 1;
 
   //
   // There was enough system memory for all the the memory types were allocated.  So,

@@ -26,13 +26,11 @@ typedef struct {
 /**
   Calculate total memory bin size needed.
 
-  @param BinTop                The top address of the memory bins. This is an optional parameter.
-                               When NULL, the returned size meets the alignment requirements as long as
-                               the base address selected also meets the alignment requirements. When
-                               non-NULL, then the returned BinTop value and the returned size both meet
-                               the alignment requirements. When non-NULL, this will be updated on
-                               output to the new top address of the memory bins that must be used to
-                               satisfy alignment requirements.
+  @param BinTop                Optional exclusive upper bound of the memory bins; unchanged on return.
+                               When NULL, the returned size includes inter-bin padding and is rounded
+                               to RUNTIME_PAGE_ALLOCATION_GRANULARITY so an aligned allocation also
+                               has an aligned upper bound. Otherwise, the returned size includes the
+                               padding needed to place each bin below the supplied upper bound.
   @param MemoryTypeInformation The memory type information array.
 
   @return The total memory bin size needed.
@@ -40,8 +38,8 @@ typedef struct {
 **/
 UINT64
 CalculateTotalMemoryBinSizeNeeded (
-  IN OUT OPTIONAL EFI_PHYSICAL_ADDRESS  *BinTop,
-  IN EFI_MEMORY_TYPE_INFORMATION        *MemoryTypeInformation
+  IN OPTIONAL EFI_PHYSICAL_ADDRESS  *BinTop,
+  IN EFI_MEMORY_TYPE_INFORMATION    *MemoryTypeInformation
   );
 
 /**
